@@ -34,12 +34,20 @@ def get_def(word):
             return data[get_close_matches(word, data.keys())[0]]
         else:
             return ("Yes or No")
-            
+
     else: 
         return ("The word you entered was not found.")
 
 #input from the user
 input_word = input("Enter a word: ")
 
-print(get_def(input_word))
+output = get_def(input_word)
+
+if type(output) == list:
+    for item in output:
+        print("-", item)
+
+else:
+    print("-", output)
+
 
