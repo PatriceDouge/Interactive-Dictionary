@@ -1,4 +1,6 @@
 import json
+import difflib
+from difflib import get_close_matches
 
 #loading the dictionary json data
 data = json.load(open("data.json"))
@@ -12,12 +14,27 @@ def get_def(word):
     #check if word is in dictionary
     if word in data:
         return data[word]
+
     #checking if the word w/capital letter is in dict
     elif word.title() in data:
         return data[word.title()]
+
     #checking if the word w/all capital letters is in dict
     elif word.upper() in data:
         return data[word.upper()]
+
+    #checking for a similar word 
+    elif len(get_close_matches(word, data.keys())) > 0:
+        ans =  input("Did you mean %s? [Yes or No]: " % get_close_matches(word, data.keys())[0])
+        ans = ans.lower()
+
+        if (ans == "yes"):
+            return data[get_close_matches(word, data.keys())[0]]
+        elif (ans == "no"):
+            return data[get_close_matches(word, data.keys())[0]]
+        else:
+            return ("Yes or No")
+            
     else: 
         return ("The word you entered was not found.")
 
